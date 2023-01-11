@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="signUp.js" defer></script>
     <link rel="stylesheet" href="main.css">
     <title>Chat App || Sign Up</title>
 </head>
@@ -26,7 +27,7 @@
         </nav>
     </header>
     <main>
-        <form action="" method="post" id="input__form">
+        <form action="./logIn.html" method="post" id="input__form">
             <div class="form__items">
                 <label for="username">Name:</label>
                 <input type="text" id="username" name="username">
@@ -40,11 +41,14 @@
                 <input type="password" id="password" name="password">
             </div>
             <div class="form__items">
-                <input type="sumbit" id="form_submit" value="SUBMIT">
+                <button type="submit" id="form_submit">Register</button>
             </div>
 
         </form>
     </main>
-    
+
+    <div id="container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js" integrity="sha512-0qU9M9jfqPw6FKkPafM3gy2CBAvUWnYVOfNPDYKVuRTel1PrciTj+a9P3loJB+j0QmN2Y0JYQmkBBS8W+mbezg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
 </body>
 </html>

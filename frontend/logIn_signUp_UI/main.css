@@ -87,6 +87,17 @@ input[type=password]{
     width: 13rem;
 }
 
+.notification{
+    background: lightcoral;
+    width: 35%;
+    padding: 2rem;
+    border-radius: 10px;
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+
+}
+
 
 
 

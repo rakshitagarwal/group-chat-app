@@ -1,15 +1,15 @@
-const Message = require('../models/message');
+const GroupMessage = require('../models/message');
 
 
 const convertIntoSeconds = (time) => {
     return new Date(`${time}`).getTime();
 }
 
-exports.postMessage = async (req, res, next) => {
-    const { message_text, sent_to } = req.body;
+exports.postGroupMessage = async (req, res, next) => {
+    const { message_text, sent_to_groupNo } = req.body;
     //console.log(message_text, req.user);
     try {
-        const result = await req.user.createMessage({message_text: message_text,sent_to: sent_to})
+        const result = await req.user.createGroupMessage({message_text: message_text,sent_to: sent_to_groupNo})
         res.status(200).json({messageInfo: result.dataValues, success: true, message: 'Message sent succesfully!!'})
     
     } catch (err) {

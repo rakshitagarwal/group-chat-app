@@ -17,10 +17,11 @@
     opacity: 70%;
 }
 .chat_and_contacts{
-    width: 80vw;
+    min-width:650px;
+    max-width: 1120px;
     margin: auto;
     margin-top: 0.3rem;
-    min-height: 80vh;
+    min-height: 590px;
     max-height: 90vh;
     border-radius: 5px;
     display: flex;
@@ -28,7 +29,7 @@
 }
 
 .contacts{
-    width: 33%;
+    width: 380px;
     padding: 1rem;
     border: 1px solid lightgray;
     margin: 0.1rem;
@@ -38,7 +39,7 @@
 }
 
 .chat__section{
-    width: 63%;
+    width: 760px;
     margin: 0.1rem;
     border: 1px solid lightgrey;
     padding: 0.4rem;
@@ -59,7 +60,8 @@
     border-radius: 10px;
     overflow: scroll;
     scroll-behavior: smooth;
-    max-height: 50%;
+    max-height:280px;
+    min-height:270px  ;
 }
 
 .single__contact{
@@ -90,6 +92,9 @@
     border: 1px solid black;
     padding: 0.2rem;
     border-radius: 10px;
+    max-height:270px;
+    min-height:260px;
+    overflow: scroll;
 }
 
 .single__group{
@@ -187,5 +192,32 @@
 }
 
 
+#form__newGroup{
+    background-color: black;
+    margin-top: .5rem;
+    display: flex;
+    justify-content: space-between;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+#form__newGroup input[type=text]{
+    background-color: rgb(221, 227, 222);
+    color: rgb(192, 32, 32);
+    width: 63%;
+    border: none;
+    font-weight: 800;
+
+}
+
+#form__newGroup input[type=submit]{
+    background-color: rgb(122, 208, 140);
+
+}
+
+#form__newGroup input[type=submit]:hover{
+    background-color: rgb(36, 150, 61);
+}
 
 

@@ -4,9 +4,80 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="../logIn_signUp_UI//main.css">
+    <script src="chat.js" defer></script>
     <title>Chat </title>
 </head>
 <body>
-    this is chat environment !!!!!
+    <header> 
+        <nav id="main__nav">
+            <div class="nav__items" id="tagName">
+                <h4>Chat App</h4>
+            </div>
+            <div class="right__section">
+                <div class="nav__items">
+                    <a href="../logIn_signUp_UI/logIn.html">Log In</a>
+                    
+                </div>
+                <div class="nav__items">
+                    <a href="about.html">About Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main__section">
+        <div class="logo__container">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ0AAACdCAMAAACZ+IrkAAAA51BMVEXu7u4Ax/8Aof4Awf8Apv8Anf4AkP8Amf4AlP0Avv8AWswAiv8AuP8Aqf8Ah/4Auv/+/Ov+8+0AhP4Ad/FnlPpTyvwAWsIAr/0AsfwAxP8AfP8AZd8AdP8Acf8AY//59+z5+fQAR8nE6PKV1/dLz/zZ7u+b3vTr9O1l0fm84fGE2PZ0zfji7OzW6PCx4PSEzfXe9O1wx/hgvPhlsvlHrPqOwfhAoPyPx/aszfFmnfgAaf9Kj/oAavBop/m9zPMAScFme8pScNREZNIAUt4AXODG2fPS3vAAW/6txfKZuvOPsvYAUP9OhfzYN3jsAAACYklEQVR4nO3YW3eaQBSG4VGIkQRkSGsBqw7FAzWp2vSYaBrbNK09/f/f081BxVP0bnPxPSvLjGMu3rUhLEQIAAAAAAAAAAAAAAAAAAAAAICCcZzA2aAch7sq5Yiw061v6HZCxR1GnF7H1/zSFl8r9SPu+am+vyMtC6yHrHlB1NX2tcW0PmdeVN87uEUe39kXvT4QR3kDrjjn8snDmp57PtfweofjKO+S59RTVwePa+INS93QT9F8SullxU8OZbKR/NDSL2kjlrq+oSUMX9PogqzFr6V0y0+2so+vOA6tGttGyjRNQ6Pfmml7yYZm086CbXD8XyjDtBPm6G0YLw2PFtRl214nCrMPicdS55oJ91oKZ+TR3OLFwCPXKt6xzewPWOosl0JczxpLEQxobY0pauC6njumMy30lljqdDdl9WT0LlmFtLDWFjGTpa5spXTr/Qd99yJ585Gl7kRPUcCKtXxZvme53qnTckov76eX9U8RS1315Ajl6meW2wB5fnqEaoXnHkXWqkeoDHhuUeRF5bDGDdPtnWycP61SqTW54oRsXtQWVqucRuN2yPatgurWNNZNJtMbEXDFCXX3LO9u+jzvy/1Q8rXRd9nZi5yzr0quYX4MELw6W5l9443Zkq+bPYgiPNPJydXNHoYBd84G9f1l5vGxcHFCtZuZyY+AO2aLbLdIs9Wa/yzYORdL6mhy83vJnbJDNrv2r4C7ZJe0bv67gIdVxHVNmtyfYsbFs6O4Ip5zMZpd+7agk4vrChwn5N9/xY0TasrzUPNIBZ4cAAAAAAAAAAAAAAAAAAAAAMAu/wHL1Up7rHwCgAAAAABJRU5ErkJggg==" alt="logo" id="app__logo">
+        </div>
+        <div class="chat_and_contacts">
+            <div class="contacts">
+                <div class="single__contacts" id="single__contacts">
+                    
+                </div>
+                <div class="groups">
+                    <div class="single__group">
+                        <h5>flat</h5>
+                    </div>
+                    <div class="single__group">
+                        <h5>family</h5>
+                    </div>
+                    <div class="single__group">
+                        <h5>group 3</h5>
+                    </div>
+                    <div class="single__group">
+                        <h5>group 4</h5>
+                    </div>
+                    
+                     
+                </div>
+
+            </div>
+            <div class="chat__section">
+                <div class="display__chat">
+                    <h4 id="person__name">Demo Name</h4>
+                    <div class="actual__chat">
+                        <div class="my__message msgs">
+                            <h4> this message is from alok</h4>
+                            <p>timestamp</p>
+                        </div>
+                        <div class="others__message msgs">
+                            <h4> this message is from Others</h4>
+                            <p>timestamp</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="send__message">
+                  <form action="http://127.0.0.1:5500/frontend/chat_interface/chat.html" method="post" id="send__message__form">
+                    <input type="text" id="msgtext" placeholder="Write Your Mesaage">
+                    <button type="submit">➤</button>
+                  </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js" integrity="sha512-0qU9M9jfqPw6FKkPafM3gy2CBAvUWnYVOfNPDYKVuRTel1PrciTj+a9P3loJB+j0QmN2Y0JYQmkBBS8W+mbezg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

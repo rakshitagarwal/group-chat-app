@@ -7,7 +7,7 @@ a{
     text-decoration: none;
 }
 body{
-    background-color: aqua;
+    background-color: rgba(69, 99, 189, 0.754);
 }
 
 #main__nav{
@@ -18,11 +18,6 @@ body{
     justify-content: center;
 }
 
-#tagName{
-    /* margin: 0 80% 0 2%; */
-    position: fixed;
-    left: 6%;
-}
 
 #input__form{
     border: 2px solid green;

@@ -8,7 +8,8 @@ const sequelize=require('./util/database')
 
 const cors=require('cors')
 
-const authRoutes=require('./routes/auth')
+const authRoutes = require('./routes/auth');
+const contactRoutes = require('./routes/contacts');
 
 const app=express();
 
@@ -17,7 +18,8 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 app.use(cors());
 
-app.use('/user',authRoutes);
+app.use('/user', authRoutes);
+app.use(contactRoutes);
 
 
 sequelize.sync()

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
-  "author": "Alok Kumar",
+  "author": "Rakshit Agarwal",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

@@ -16,6 +16,8 @@ form__newGroup.addEventListener('submit', async(e) => {
 
 window.addEventListener('DOMContentLoaded', ready);
 
+
+
 function ready() {
     //fetch All groups
     let groups = document.getElementById('groups');

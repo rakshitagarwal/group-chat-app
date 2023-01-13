@@ -220,4 +220,10 @@
     background-color: rgb(36, 150, 61);
 }
 
+.message_sender_name{
+    color: coral;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bolder;
+}
+
 

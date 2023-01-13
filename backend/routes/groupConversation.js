@@ -6,9 +6,9 @@ const groupConversationController = require('../controllers/groupConversation')
 
 const authorization=require('../middleware/authorization')
 
-//router.post('/sendMessage', authorization, groupConversationController.postMessage);
+router.post('/sendGroupMessage', authorization, groupConversationController.postGroupMessage);
 
-//router.get('/getMessages/:contactIdOfReceiver', authorization, groupConversationController.getMessage);
+router.get('/getGroupMessages/:groupId', authorization, groupConversationController.getGroupMessage);
 
 
 

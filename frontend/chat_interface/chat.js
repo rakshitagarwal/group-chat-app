@@ -1,4 +1,3 @@
-
 window.addEventListener('DOMContentLoaded', ready);
 
 
@@ -97,8 +96,6 @@ function getAllMessagesOfThisConvo(contactId) {
 
         })
         .catch(err => console.log(err));
-        
-    
 }
 
 function addMesaageToChat(msg) {
@@ -108,3 +105,9 @@ function addMesaageToChat(msg) {
                      <p>timestamp</p></div>`
     actualChat.innerHTML += sendersMessage;
 }
+
+
+//-----on logout-----
+document.getElementById('log-out').addEventListener('click', () => {
+    localStorage.removeItem('token');
+})

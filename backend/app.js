@@ -30,7 +30,8 @@ const GroupMessage = require('./models/groupMessage')
 User.hasMany(Message);
 Message.belongsTo(User);
 User.hasMany(Group);
-Group.hasMany(GroupMessage);
+//Group.hasMany(GroupMessage);
+User.hasMany(GroupMessage);
 
 
 app.use('/user', authRoutes);
@@ -39,8 +40,7 @@ app.use(conversationRoutes);
 app.use(groupConversationRoutes);
 
 
-sequelize.sync(
-)
+sequelize.sync()
 .then(()=>{
     app.listen(5000)
 })

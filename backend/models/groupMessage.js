@@ -16,6 +16,10 @@ const GroupMessage = sequelize.define('groupMessage', {
     sent_to_groupNo: {
         type: Sequelize.INTEGER,
         allowNull:false
+    },
+    message_sender_name: {
+        type: Sequelize.STRING,
+        allowNull:false
     }
 
 })

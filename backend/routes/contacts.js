@@ -18,12 +18,16 @@ router.get('/getContacts', authorization, contactsController.getContacts);
 
 
 //-------> Grroup Contacts<----------
-router.get('/getGroups', authorization, contactsController.getGroups);
+router.get('/getChatGroups', authorization, contactsController.getChatGroups);
 
 router.post('/newGroup', authorization, contactsController.postNewGroup);
 
 //---join/leave Group routes----------
-router.post('/joinGroup',authorization, contactsController.postJoinGroup);
+router.post('/addNewMember', authorization, contactsController.postAddNewMember);
+
+router.get('/getGroupMembers/:groupId', authorization, contactsController.getGroupMembers);
+
+
 
 
 module.exports = router;

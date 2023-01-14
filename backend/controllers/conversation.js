@@ -17,7 +17,8 @@ exports.postMessage = async (req, res, next) => {
     }
 }
 
-exports.getMessage = async(req, res, next) => {
+exports.getMessage = async (req, res, next) => {
+    console.log('get request rcv');
     const contactIdOfReceiver = req.params.contactIdOfReceiver;
     const messagequeue = [];
     const recieversMessages = [];

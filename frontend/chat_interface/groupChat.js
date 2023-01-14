@@ -11,17 +11,13 @@ function notifyUser(message) {
 const form__newGroup = document.getElementById("form__newGroup");
 form__newGroup.addEventListener("submit", async (e) => {
   e.preventDefault();
-  //console.log('submitting new group');
   const newGroupData = {
     group_name: document.getElementById("newGroup__input").value,
   };
   try {
-    const response = await axios.post(
-      `http://localhost:5000/newGroup`,
-      newGroupData,
-      { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
+    const response = await axios.post(`http://localhost:5000/newGroup`,newGroupData,
+    { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } }
     );
-    console.log(response);
     notifyUser(response.data.message);
   } catch (err) {
     console.log(err);
@@ -31,78 +27,52 @@ form__newGroup.addEventListener("submit", async (e) => {
 window.addEventListener("DOMContentLoaded", ready);
 
 function ready() {
-   //fetch All groups
+   //----------fetch All groups
    let groups = document.getElementById("groups");
+   function addYourGroupsToScreen(contact) {
+    let groupsDiv = `<div class="single__group" id="${contact.groupId}">
+        <h5 >${contact.group_name}</h5></div>`;
+      groups.innerHTML += groupsDiv;}
 
-   function addGroupContacts(contact) {
-    //console.log(contact.id);
-    let groupsDiv = `<div class="single__group yourGroups" id="${contact.id}">
-        <h5 >${contact.group_name}</h5>
-        </div>`;
-    groups.innerHTML += groupsDiv;
-    }
-    
-    function addOthersGroup(contact) {
-        //console.log(contact.id);
-        let groupsDiv = `<div class="single__group othersGroups" id="${contact.id}">
-            <h5 >${contact.group_name}</h5>
-            <button id="${contact.id}" class='joingroup__Btn'>Join Group</button>
-            </div>`;
-        groups.innerHTML += groupsDiv;
-      }
-
-  axios
-    .get(`http://localhost:5000/getGroups`, {
-      headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
-    })
+  axios.get(`http://localhost:5000/getChatGroups`, {headers: { authorization: `Bearer ${localStorage.getItem("token")}` },})
     .then((res) => {
-        const groupArr = res.data.yourGroups;
-        const othersGroups = res.data.othersGroups;
-      //console.log(res);
-      groupArr.forEach((element) => {
-        console.log(element);
-        addGroupContacts(element);
+        const yourGroups = res.data.groupInfo;
+        yourGroups.forEach((element) => {
+        addYourGroupsToScreen(element);
       });
-        othersGroups.forEach((group) => {
-            console.log(group.id);
-            addOthersGroup(group);
-        })
-    })
-        .catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
     
-    
-    
-
-  groups.addEventListener("click", (e) => {
+  //--------Group data and chat feature ------------//
+    groups.addEventListener("click", (e) => {
     let chatSection = document.getElementsByClassName("chat__section")[0];
-    if (e.target.classList.contains('yourGroups')) {
+    if (e.target.classList.contains('single__group')) {
         let groupId = e.target.id;
-        chatSection.innerHTML = `<div class="display__chat">
-                        <h4 id="person__name">${e.target.textContent}</h4>
-                        <div class="actual__chat"></div></div>
-                    <div class="send__message">
-                      <form action="" method="post" id="send__message__form">
-                        <input type="text" id="${groupId}" class="msgText" placeholder="Write Your Mesaage">
-                        <button type="submit" id="message_send_button">➤</button>
-                      </form>
-                    </div>`;
-        getAllMessagesOfThisGroup(groupId);
+        chatSection.innerHTML = `<div class="display__chat" id="display__chat">
+                                    <h4 id="${groupId}" class="group__name">${e.target.textContent}</h4>
+                                    <div class="actual__chat">
+                                    </div>
+                                  </div>
+                                  <div class="send__message">
+                                    <form action="" method="post" id="send__message__form">
+                                    <input type="text" id="${groupId}" class="msgText" placeholder="Write Your Mesaage">
+                                    <button type="submit" id="message_send_button">➤</button>
+                                    </form>
+                                  </div>`;
+      //getAllMessagesOfThisGroup(groupId);
+
+      const displaychat = document.getElementById('display__chat');
+      displaychat.addEventListener('click', showGroupInfo);
     }
     else if (e.target.classList.contains('othersGroups')) {
         notifyUser('You are not part of this till Now. You can join this group by clicking on "join button"..');
       }
     else if (e.target.textContent == 'Join Group') {
         console.log('groupID:', e.target.id);
-        axios.post(`http://localhost:5000/joinGroup`, { joinGroupId: `${e.target.id}` }, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+        axios.post(`http://localhost:5000/joinGroup`,{joinGroupId:`${e.target.id}`}, {headers:{authorization:`Bearer ${localStorage.getItem("token")}` } })
             .then(res  =>console.log(res))
             .catch(err =>console.log(err))
     }
-    
-
-    // setInterval(() => {
-    //     getAllMessagesOfThisConvo(contactId)
-    // }, 1000);
-
+  
     const submitForm = document.getElementById("send__message__form");
     submitForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -111,14 +81,10 @@ function ready() {
         sent_to_groupNo: document.getElementsByClassName("msgText")[0].id,
       };
 
-      //console.log(msgData);
       document.getElementsByClassName("msgText")[0].value = "";
       axios
-        .post("http://localhost:5000/sendGroupMessage", groupMsgData, {
-          headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
-        })
+        .post("http://localhost:5000/sendGroupMessage", groupMsgData, {headers: { authorization: `Bearer ${localStorage.getItem("token")}`},})
         .then((response) => {
-          //console.log(response.data.messageInfo.message_text);
           addMesaageToChat(response.data.messageInfo.message_text);
         });
     });
@@ -160,3 +126,54 @@ const getAllMessagesOfThisGroup = async (groupId) => {
     }
   });
 };
+
+
+//----group info-----and Add Members to group(Admin Access)----
+function showGroupInfo(e) {
+  if (e.target.id === "person__name") {
+    console.log('No Group Selected');
+    return
+  }
+  else if (e.target.classList.contains("group__name")) {
+    document.getElementsByClassName('actual__chat')[0].style.display = 'none';
+    let displayChatArea = e.target.parentElement;
+    let detailsArea = `
+    <div id='groupDetail__section'>
+      <div class="groupMembers">
+       <h4> Members of the group</h4>
+      </div>
+     <div class="add_new_member">
+       <form action='#' method="post" id="add_new_memberForm" >
+        <input type="text" id="${e.target.id}" class="add_member_mobile" placeholder="Enter Valid Mobile Number">
+        <input type="submit" value="Add Member" >
+       </form>
+     </div>
+    </div>`
+    displayChatArea.innerHTML += detailsArea;
+
+    axios.get(`http://localhost:5000/getGroupMembers/${e.target.id}`, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+      .then(res => {
+        const members = res.data.groupMembers;
+        members.forEach((member) => {
+          let groupMembers = document.getElementsByClassName('groupMembers')[0];
+          let groupMember= `<div class="groupMember">
+            <h5>User Id: ${member.userId}</h5>
+            <p> IsAdmin:  ${member.isAdmin} </p>
+            </div>`
+          groupMembers.innerHTML +=groupMember;
+        })
+      }).catch(err => console.log(err))
+
+    const add_new_memberForm = document.getElementById('add_new_memberForm');
+    add_new_memberForm.addEventListener('submit',(e)=> {
+      e.preventDefault();
+      const mobileNo = document.getElementsByClassName('add_member_mobile')[0].value;
+      const groupId = document.getElementsByClassName('add_member_mobile')[0].id;
+      document.getElementsByClassName('add_member_mobile')[0].value=''
+      axios.post("http://localhost:5000/addNewMember", { mobileNo: mobileNo, groupId:groupId }, {
+        headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+      }).then(res => console.log(res)).catch(err => console.log(err));
+      
+    })
+  }
+}

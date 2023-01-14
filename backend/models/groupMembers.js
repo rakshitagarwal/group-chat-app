@@ -8,7 +8,13 @@ const GroupMember=sequelize.define('groupMember',{
         primaryKey:true,
         autoIncrement:true,
         allowNull:false
+    },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        allowNull:false,
+        default:false
     }
+
     
 })
 

@@ -1,108 +1,103 @@
 const User = require("../models/user");
-const Group = require("../models/group");
-const sequelize = require('sequelize');
+const ChatGroup = require("../models/chatgroup");
+const GroupMember = require("../models/groupMembers");
+const sequelize = require("sequelize");
 const Op = sequelize.Op;
 
-
 exports.getContacts = async (req, res, next) => {
-    try {
-        const contactArr = []
-        const contacts = await User.findAll({
-            where: {
-                id: {
-                    [sequelize.Op.not]: req.user.id
-                }
-            }
-        });
-        //console.log(contacts[0].dataValues);
-        contacts.forEach(element => {
-            const newObj = {
-                id: element.dataValues.id,
-                name: element.dataValues.name,
-                phone: element.dataValues.phone
-            }
-            //console.log(element.dataValues);
-            contactArr.push(newObj);
-            //console.log(contactArr);
-        
-        });
-        res.status(200).json({ contacts: contactArr, success: true });
-    } catch (err) {
-        console.log(err);
-    }
-}
+  try {
+    const contactArr = [];
+    const contacts = await User.findAll({
+      where: {
+        id: {
+          [sequelize.Op.not]: req.user.id,
+        },
+      },
+    });
+    //console.log(contacts[0].dataValues);
+    contacts.forEach((element) => {
+      const newObj = {
+        id: element.dataValues.id,
+        name: element.dataValues.name,
+        phone: element.dataValues.phone,
+      };
+      //console.log(element.dataValues);
+      contactArr.push(newObj);
+      //console.log(contactArr);
+    });
+    res.status(200).json({ contacts: contactArr, success: true });
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-
-// exports.getDetails = async (req, res, next) => {
-//     try {
-//         const userId = req.params.userId;
-//         const contacts = await User.findAll({
-//             where: {
-//                 id: userId
-//             }
-//         });
-//         //console.log(contacts[0].dataValues);
-//         contacts.forEach(element => {
-//             const newObj = {
-//                 id: element.dataValues.id,
-//                 name: element.dataValues.name,
-//                 phone: element.dataValues.phone
-//             }
-//             //console.log(element.dataValues);
-//             contactArr.push(newObj);
-//             //console.log(contactArr);
-        
-//         });
-//         res.status(200).json({ contacts: contactArr, success: true });
-//     } catch (err) {
-//         console.log(err);
-//     }
-// }
-
-
-
-exports.getGroups = async (req, res, next) => {
-    try {
-        const groups = await Group.findAll({ where: { userId: req.user.id } });
-        const othersGroups = await Group.findAll({
-            where: {
-                userId: {
-            [sequelize.Op.not] : req.user.id
-                }
-            }
-        })
-        res.status(200).json({ yourGroups: groups,othersGroups:othersGroups,success: true });
-    } catch (err) {
-        console.log(err);
-    }
-}
+exports.getChatGroups = async (req, res, next) => {
+  const groupInfo = [];
+  try {
+    const groups = await req.user.getChatGroups()
+    groups.forEach((group) => {
+      const obj = {
+        group_name:group.dataValues.group_name ,
+        groupId: group.dataValues.id
+      }
+      groupInfo.push(obj);
+    })
+    res.status(200).json({groupInfo:groupInfo,success: true });
+  } catch (err) {
+      res.json({ message: "cant get groups", success: false });
+  }
+};
 
 exports.postNewGroup = async (req, res, next) => {
-    try {
-        const isAlreadyPresent = await Group.findAll({ where: { group_name: req.body.group_name } });
-        //console.log('res user',req.user);
-        //console.log(isAlreadyPresent);
-        if (isAlreadyPresent.length === 0) {
-            
-            const new_group = await req.user.createGroup({ group_name: req.body.group_name });
-            console.log(new_group);
-            
-            res.status(200).json({ new_group: new_group, success: true ,message:'Successfully created'});
-        }
+  const { group_name } = req.body;
+  const userId = req.user.id;
+  try {
+    if (!group_name) {
+        res.status(404).json({message:"No Name Entered"})
+    }
+    const isAlreadyPresent = await ChatGroup.findAll({ where: { group_name:group_name } });
+    if (isAlreadyPresent.length === 0) {
+      const newChatGroup = await req.user.createChatGroup({group_name:group_name,created_by_userId:userId},{through:{isAdmin:true}});
+      console.log(newChatGroup);
+      res.status(201).json({ success: true, message: "Group Successfully Created", newChatGroup: newChatGroup.dataValues });
+    }
         else {
-            res.json({ message: 'Group Already Present, Try Other Names !!!', success: false });
+            res.json({ success: false, message: "Group Name is not Availble for You. try for unique names !!" });
         }
-    } catch (err) {
-        res.status(400).json({ success: false, message: 'some error occured', err: err });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json({ success: false, message: "some Error Occured !!" });
     }
 }
 
-//-------join group----
-exports.postJoinGroup = (req, res, next) => {
-    const joinGroupId = req.body.joinGroupId;
-    const userId = req.user.id;
-    console.log(joinGroupId, userId);
 
+//-------Add New Memeber in group----
+exports.postAddNewMember = async (req, res, next) => { 
+  const { mobileNo ,groupId} = req.body;
+  const adminUser = req.user.id;
+  //console.log(adminUser);
 
+  const isAdmin = await GroupMember.findOne({ where: { userId: adminUser, chatGroupId: groupId, isAdmin: true } });
+  if (!isAdmin) { return res.status(404).json({ message: "You dont have Admin Powers for this group", success: false }) }
+  
+  const isUserRegistered = await User.findOne({ where: { phone: mobileNo } });
+  if (!isUserRegistered) { return res.status(400).json({ success: false, message: "This User is not Register in our data base. Please ask him to signUp first" }) };
 
+  const addNewMember = await GroupMember.create({ userId: isUserRegistered.id, chatGroupId: groupId, isAdmin:false});
+  res.status(200).json({ success: true, message: "User added to the group", addedUser: addNewMember.dataValues });
+}
+
+exports.getGroupMembers = async (req, res, next) => {
+  try {
+    const memberArr = [];
+    const chatGroupId = req.params.groupId;
+    const members = await GroupMember.findAll({ where: { chatGroupId: chatGroupId } });
+    members.forEach(element => {
+          memberArr.push(element.dataValues)
+    })
+    res.status(200).json({groupMembers:memberArr,success: true, message: "fetched successfully" });
+  } catch (err) {
+    console.log(err);
+  }
 }

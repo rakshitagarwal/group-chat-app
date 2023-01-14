@@ -15,7 +15,11 @@ const Message = sequelize.define('message', {
     },
     sent_to: {
         type: Sequelize.INTEGER,
-        allowNull:false
+        default:null
+    },
+    sent_to_groupId:{
+        type: Sequelize.INTEGER,
+        default:null
     }
 
 })

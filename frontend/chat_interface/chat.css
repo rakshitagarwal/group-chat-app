@@ -49,7 +49,17 @@
     background: black;
     color: white;
     text-align: center;
-    padding: 0.3rem;
+    padding: 0.5rem;
+    width: 92%;
+}
+
+.group__name{
+    background: black;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    width: 92%;
+
 }
 
 .single__contacts{
@@ -240,4 +250,40 @@
     font-weight: bolder;
 }
 
+#groupDetail__section{
+    display:flex;
+    background: lightgray;
+    width:670px;
+    
+}
 
+.groupMembers{
+    width: 90%;
+    
+}
+.groupMember{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid green;
+    background-color: lightgreen;
+}
+
+.add_new_member{
+    padding: 1rem;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 8px;
+    
+}
+
+.add_new_member input[type=submit]{
+    padding: 0.5rem;
+    
+    
+
+}
+
+.add_new_member input[type=submit]:hover{
+    background-color: rebeccapurple;
+    color: white;
+}

@@ -1,3 +1,14 @@
+function notifyUser(message){
+    const container = document.getElementById('container');
+    const notification = document.createElement('div');
+    notification.classList.add('notification');
+    notification.innerHTML = `<h4>${message}</h4>`;
+    container.appendChild(notification);
+    setTimeout(()=>{
+        notification.remove();
+        },2500)
+}
+
 window.addEventListener('DOMContentLoaded', ready);
 
 

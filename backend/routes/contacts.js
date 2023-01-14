@@ -22,5 +22,8 @@ router.get('/getGroups', authorization, contactsController.getGroups);
 
 router.post('/newGroup', authorization, contactsController.postNewGroup);
 
+//---join/leave Group routes----------
+router.post('/joinGroup',authorization, contactsController.postJoinGroup);
+
 
 module.exports = router;

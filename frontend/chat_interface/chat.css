@@ -105,6 +105,20 @@
     background-color: rgb(193, 41, 190);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.joingroup__Btn{
+    margin-right: 5%;
+    padding: 0.25rem;
+    border-radius: 5px;
+    border: none;
+}
+
+.joingroup__Btn:hover{
+    background-color: rebeccapurple;
+    color: white;
+    font-weight: bolder;
 }
 
 .single__group h5{

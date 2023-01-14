@@ -8,12 +8,8 @@ const GroupMember=sequelize.define('groupMember',{
         primaryKey:true,
         autoIncrement:true,
         allowNull:false
-    },
-    name:{
-        type:Sequelize.STRING,
-        allowNull:false,
     }
     
 })
 
-module.exports=Group;
+module.exports=GroupMember;

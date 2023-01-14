@@ -24,14 +24,23 @@ const User = require('./models/user');
 const Message = require('./models/message')
 const Group = require('./models/group')
 const GroupMessage = require('./models/groupMessage')
+const GroupMember = require('./models/groupMembers')
 
 
 //relation between tables
 User.hasMany(Message);
 Message.belongsTo(User);
+
+Group.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Group);
-//Group.hasMany(GroupMessage);
+
+Group.hasMany(GroupMessage);
+GroupMessage.belongsTo(Group);
 User.hasMany(GroupMessage);
+GroupMessage.belongsTo(User);
+
+User.belongsToMany(Group, { through: GroupMember });
+Group.belongsToMany(User, { through: GroupMember });
 
 
 app.use('/user', authRoutes);
@@ -41,7 +50,7 @@ app.use(groupConversationRoutes);
 
 
 sequelize.sync()
-.then(()=>{
+    .then(() => {
     app.listen(5000)
 })
 .catch(err=>{

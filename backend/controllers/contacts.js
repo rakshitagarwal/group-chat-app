@@ -101,3 +101,60 @@ exports.getGroupMembers = async (req, res, next) => {
     console.log(err);
   }
 }
+
+exports.postMakeAdmin = async (req, res, next) => {
+  const { targetId, groupId } = req.body;
+  const userId = req.user.id;
+  console.log(targetId, groupId, userId);
+  try { 
+    const isAdmin = await GroupMember.findOne({ where: { userId: userId, chatGroupId: groupId, isAdmin: true } });
+    if (!isAdmin) { return res.json({ message: "Only Admin can remove or add members", success: false }) };
+
+    await GroupMember.update({isAdmin: true }, { where: { userId: targetId, chatGroupId: groupId, isAdmin: false } });
+    res.status(200).json({ success: true, message: "Now Group has one more admin !!" })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+exports.postRemoveFromAdmin = async (req, res, next) => {
+  const { targetId, groupId } = req.body;
+  const userId = req.user.id;
+  console.log(targetId, groupId, userId);
+  try { 
+    const isAdmin = await GroupMember.findOne({ where: { userId: userId, chatGroupId: groupId, isAdmin: true } });
+    if (!isAdmin) { return res.json({ message: "Only Admin can remove or add members", success: false }) };
+
+    await GroupMember.update({isAdmin: false }, { where: { userId: targetId, chatGroupId: groupId, isAdmin: true } });
+    res.status(200).json({success:true, message:"One admin has been removed !!"})
+  }catch (err) {
+    console.log(err)
+  }
+}
+
+exports.postRemoveUser = async (req, res, next) => {
+  const { targetId, groupId } = req.body;
+  const userId = req.user.id;
+  console.log(targetId, groupId, userId);
+  try { 
+    const isAdmin = await GroupMember.findOne({ where: { userId: userId, chatGroupId: groupId, isAdmin: true } });
+    if (!isAdmin) { return res.json({ message: "Only Admin can remove or add members", success: false }) };
+
+    await GroupMember.destroy({ where: {userId: targetId, chatGroupId: groupId}});
+    res.status(200).json({success:true, message:"User removed successfully"})
+}catch (err) {
+    console.log(err)
+  }
+}
+
+exports.postLeaveGroup = async (req, res, next) => {
+  const {groupId } = req.body;
+  const userId = req.user.id;
+  try { 
+    await GroupMember.destroy({ where: {userId: userId, chatGroupId: groupId}});
+    res.status(200).json({ success: true, message: "You left Group Succesfully" })
+  } catch (err) {
+    res.status(400).json({ success:false, message: "Some error occured, please try again" })
+  }
+}
+

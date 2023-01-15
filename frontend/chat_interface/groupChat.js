@@ -66,12 +66,7 @@ function ready() {
     else if (e.target.classList.contains('othersGroups')) {
         notifyUser('You are not part of this till Now. You can join this group by clicking on "join button"..');
       }
-    else if (e.target.textContent == 'Join Group') {
-        console.log('groupID:', e.target.id);
-        axios.post(`http://localhost:5000/joinGroup`,{joinGroupId:`${e.target.id}`}, {headers:{authorization:`Bearer ${localStorage.getItem("token")}` } })
-            .then(res  =>console.log(res))
-            .catch(err =>console.log(err))
-    }
+    
   
     const submitForm = document.getElementById("send__message__form");
     submitForm.addEventListener("submit", (e) => {
@@ -135,6 +130,7 @@ function showGroupInfo(e) {
     return
   }
   else if (e.target.classList.contains("group__name")) {
+    const groupId = e.target.id;
     document.getElementsByClassName('actual__chat')[0].style.display = 'none';
     let displayChatArea = e.target.parentElement;
     let detailsArea = `
@@ -144,26 +140,61 @@ function showGroupInfo(e) {
       </div>
      <div class="add_new_member">
        <form action='#' method="post" id="add_new_memberForm" >
-        <input type="text" id="${e.target.id}" class="add_member_mobile" placeholder="Enter Valid Mobile Number">
+        <input type="text" id="${groupId}" class="add_member_mobile" placeholder="Enter Valid Mobile Number">
         <input type="submit" value="Add Member" >
        </form>
+       <button class="leave__group" id="${groupId}"> Leave Group </button>
      </div>
     </div>`
     displayChatArea.innerHTML += detailsArea;
-
-    axios.get(`http://localhost:5000/getGroupMembers/${e.target.id}`, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+    
+    
+    axios.get(`http://localhost:5000/getGroupMembers/${groupId}`, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
       .then(res => {
         const members = res.data.groupMembers;
         members.forEach((member) => {
           let groupMembers = document.getElementsByClassName('groupMembers')[0];
           let groupMember= `<div class="groupMember">
             <h5>User Id: ${member.userId}</h5>
-            <p> IsAdmin:  ${member.isAdmin} </p>
+            <button class="adminBtn ${member.isAdmin}" id="${member.userId}"> ${member.isAdmin ? "Admin" : "Make Admin"} </buuton>
+            <button class="removeUser" id="${member.userId}"> Remove User </buuton>
             </div>`
           groupMembers.innerHTML +=groupMember;
         })
       }).catch(err => console.log(err))
+    
+    const groupDetail__section = document.getElementById("groupDetail__section");
+    groupDetail__section.addEventListener('click', (e) => {
+      if (e.target.classList.contains('adminBtn') && e.target.classList.contains('false')) {
+        axios.post('http://localhost:5000/makeAdmin', { targetId: e.target.id ,groupId:groupId}, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+          .then(res => console.log(res))
+          .catch(err=>console.log(err))
+        
+      }
 
+      if (e.target.classList.contains('adminBtn') && e.target.classList.contains('true')) {
+        axios.post('http://localhost:5000/removeAdmin', { targetId:e.target.id ,groupId:groupId}, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+          .then(res => console.log(res))
+          .catch(err=>console.log(err))
+      }
+
+      if (e.target.classList.contains('removeUser')) {
+        console.log('remove user clicked', e.target.id);
+        axios.post('http://localhost:5000/removeMember', { targetId: e.target.id ,groupId:groupId}, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+          .then(res => console.log(res.data.message))
+          .catch(err=>console.log(err))
+      }
+
+      if (e.target.classList.contains('leave__group')) {
+        axios.post('http://localhost:5000/leaveGroup', {groupId:groupId}, { headers: { authorization: `Bearer ${localStorage.getItem("token")}` } })
+          .then(res => console.log(res.data.message))
+          .catch(err=>console.log(err))
+      }
+
+     // console.log('admin btn clicked', e.target.classList, e.target.id);
+    })
+    
+    
     const add_new_memberForm = document.getElementById('add_new_memberForm');
     add_new_memberForm.addEventListener('submit',(e)=> {
       e.preventDefault();

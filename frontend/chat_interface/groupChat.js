@@ -58,7 +58,7 @@ function ready() {
                                     <button type="submit" id="message_send_button">➤</button>
                                     </form>
                                   </div>`;
-      //getAllMessagesOfThisGroup(groupId);
+      getAllMessagesOfThisGroup(groupId);
 
       const displaychat = document.getElementById('display__chat');
       displaychat.addEventListener('click', showGroupInfo);
@@ -190,8 +190,6 @@ function showGroupInfo(e) {
           .then(res => console.log(res.data.message))
           .catch(err=>console.log(err))
       }
-
-     // console.log('admin btn clicked', e.target.classList, e.target.id);
     })
     
     

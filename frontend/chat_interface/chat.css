@@ -252,38 +252,102 @@
 
 #groupDetail__section{
     display:flex;
-    background: lightgray;
     width:670px;
-    
 }
 
 .groupMembers{
-    width: 90%;
-    
+    width: 70%;
 }
+
 .groupMember{
+    padding: 0.5rem;
+    border-radius: 3px;
+    width: 90%;
+    margin: 0.5rem auto;
     display: flex;
+    border: none;
     justify-content: space-between;
-    border: 1px solid green;
-    background-color: lightgreen;
+    background-color: rgb(93, 214, 93);
+}
+
+.removeUser{
+    padding: 0.15rem;
+    border: none;
+    border-radius: 10%;
+    background: lightcoral;
+    color: aliceblue;
+
+}
+
+.removeUser:hover{
+    background-color: darkred;
+    color: white;
+}
+
+.adminBtn{
+    padding: 0.15rem;
+    border: none;
+    border-radius: 10%;
+    background: rgb(186, 128, 240);
+    color: aliceblue;
+}
+
+.adminBtn:hover{
+    background-color: rgb(13, 224, 213);
+    color: white;
 }
 
 .add_new_member{
-    padding: 1rem;
     align-items: center;
-    border: 1px solid black;
+    background-color: rgb(109, 149, 153);
+}
+
+#add_new_memberForm{
+    margin: 1rem 0.2rem 0px 0.2rem;
+    background: lightskyblue;
+    padding: 1rem;
     border-radius: 8px;
     
 }
 
+.add_new_member input[type=text]{
+    width: 95%;
+    font-size: 1rem;
+}
+
+.add_new_member input[type=text]:hover{
+    box-shadow: 2px 2px lightseagreen;
+}
+
 .add_new_member input[type=submit]{
+    margin: 0.2rem 0px 0px 40%;
     padding: 0.5rem;
+    background: rgb(28, 137, 28);
+    border-radius: 6px;
+    width: 8rem;
+    font-weight: bolder;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     
     
 
 }
 
 .add_new_member input[type=submit]:hover{
-    background-color: rebeccapurple;
+    background-color: darkgreen;
+    color: white;
+}
+
+.leave__group{
+    padding: 0.5rem;
+    margin: 250px 0px 5px 60% ;
+    background-color: lightcoral;
+    border: none;
+    border-radius: 6px;
+    font-weight: 800;
+    width: 5.7rem;
+}
+
+.leave__group:hover{
+    background: darkred;
     color: white;
 }

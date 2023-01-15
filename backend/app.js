@@ -11,6 +11,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const contactRoutes = require("./routes/contacts");
 const conversationRoutes = require("./routes/conversation");
+const groupConversationRoutes = require('./routes/groupConversation');
 
 const app = express();
 
@@ -37,6 +38,7 @@ ChatGroup.belongsToMany(User, { through: GroupMember });
 app.use("/user", authRoutes);
 app.use(contactRoutes);
 app.use(conversationRoutes);
+app.use(groupConversationRoutes);
 
 sequelize
   .sync()

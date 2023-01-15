@@ -20,6 +20,10 @@ const Message = sequelize.define('message', {
     sent_to_groupId:{
         type: Sequelize.INTEGER,
         default:null
+    },
+    message_sender_name: {
+        type: Sequelize.STRING,
+        allowNull:false
     }
 
 })

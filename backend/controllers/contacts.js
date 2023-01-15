@@ -93,7 +93,7 @@ exports.getGroupMembers = async (req, res, next) => {
     const memberArr = [];
     const chatGroupId = req.params.groupId;
     const members = await GroupMember.findAll({ where: { chatGroupId: chatGroupId } });
-    members.forEach(element => {
+     members.forEach(element => {
           memberArr.push(element.dataValues)
     })
     res.status(200).json({groupMembers:memberArr,success: true, message: "fetched successfully" });

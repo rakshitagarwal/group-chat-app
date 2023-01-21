@@ -34,7 +34,7 @@
     border: 1px solid lightgray;
     margin: 0.1rem;
     border-radius: 3px;
-    background: green;
+    background: #e6f7ff;
 
 }
 
@@ -190,6 +190,56 @@
     display: flex;
     align-items: center;
 }
+#showSendMediaForm{
+    align-self: center;
+    border-radius: 5px;
+    border: none;
+    background: black;
+    color: white;
+    padding: 0 1.1rem;
+    font-size: 25px;
+}
+
+#showSendMediaForm:hover{
+    background: rgb(34, 28, 28);
+    padding: 0.09rem 1.1rem;
+}
+
+#sendMediaSection{
+    display: none;
+}
+
+/* .mediaFormActive{
+    display: none;
+} */
+
+
+.send_MediaOrMsg{
+    display: flex;
+    align-items: center;
+}
+#media__form{
+    display: flex;
+    margin: 0.2rem;
+
+}
+
+#media__form input[type=submit]{
+    background:rgb(33, 160, 33) ;
+    color: white;
+    width:60px;
+    font-size: 28px;
+    font-weight: bold;
+    width: 5rem;
+    border-radius: 5px;
+}
+
+#media__form input[type=submit]:hover{
+    background:rgb(126, 203, 10);
+    color: white;
+    border: none;
+}
+
 
 #send__message__form{
     display: flex;

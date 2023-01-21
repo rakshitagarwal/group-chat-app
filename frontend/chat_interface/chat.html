@@ -8,29 +8,23 @@
     <link rel="stylesheet" href="../logIn_signUp_UI//main.css">
     <script src="chat.js" defer></script>
     <script src="groupChat.js" defer></script>
-    <title>Chat </title>
+    <title>Group Chat App</title>
 </head>
 <body>
     <header> 
         <nav id="main__nav">
             <div class="nav__items" id="tagName">
-                <h4>Chat App</h4>
+                <h2>Group Chat App Project</h2>
             </div>
             <div class="right__section">
                 <div class="nav__items">
-                    <a href="../logIn_signUp_UI/logIn.html" id="log-out">Log Out</a>
-                    
+                    <button onclick="window.location.href = '../logIn_signUp_UI/login.html'">Log out</button>
                 </div>
-                <div class="nav__items">
-                    <a href="about.html">About Us</a>
-                </div>
+                
             </div>
         </nav>
     </header>
     <main class="main__section">
-        <div class="logo__container">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ0AAACdCAMAAACZ+IrkAAAA51BMVEXu7u4Ax/8Aof4Awf8Apv8Anf4AkP8Amf4AlP0Avv8AWswAiv8AuP8Aqf8Ah/4Auv/+/Ov+8+0AhP4Ad/FnlPpTyvwAWsIAr/0AsfwAxP8AfP8AZd8AdP8Acf8AY//59+z5+fQAR8nE6PKV1/dLz/zZ7u+b3vTr9O1l0fm84fGE2PZ0zfji7OzW6PCx4PSEzfXe9O1wx/hgvPhlsvlHrPqOwfhAoPyPx/aszfFmnfgAaf9Kj/oAavBop/m9zPMAScFme8pScNREZNIAUt4AXODG2fPS3vAAW/6txfKZuvOPsvYAUP9OhfzYN3jsAAACYklEQVR4nO3YW3eaQBSG4VGIkQRkSGsBqw7FAzWp2vSYaBrbNK09/f/f081BxVP0bnPxPSvLjGMu3rUhLEQIAAAAAAAAAAAAAAAAAAAAAICCcZzA2aAch7sq5Yiw061v6HZCxR1GnF7H1/zSFl8r9SPu+am+vyMtC6yHrHlB1NX2tcW0PmdeVN87uEUe39kXvT4QR3kDrjjn8snDmp57PtfweofjKO+S59RTVwePa+INS93QT9F8SullxU8OZbKR/NDSL2kjlrq+oSUMX9PogqzFr6V0y0+2so+vOA6tGttGyjRNQ6Pfmml7yYZm086CbXD8XyjDtBPm6G0YLw2PFtRl214nCrMPicdS55oJ91oKZ+TR3OLFwCPXKt6xzewPWOosl0JczxpLEQxobY0pauC6njumMy30lljqdDdl9WT0LlmFtLDWFjGTpa5spXTr/Qd99yJ585Gl7kRPUcCKtXxZvme53qnTckov76eX9U8RS1315Ajl6meW2wB5fnqEaoXnHkXWqkeoDHhuUeRF5bDGDdPtnWycP61SqTW54oRsXtQWVqucRuN2yPatgurWNNZNJtMbEXDFCXX3LO9u+jzvy/1Q8rXRd9nZi5yzr0quYX4MELw6W5l9443Zkq+bPYgiPNPJydXNHoYBd84G9f1l5vGxcHFCtZuZyY+AO2aLbLdIs9Wa/yzYORdL6mhy83vJnbJDNrv2r4C7ZJe0bv67gIdVxHVNmtyfYsbFs6O4Ip5zMZpd+7agk4vrChwn5N9/xY0TasrzUPNIBZ4cAAAAAAAAAAAAAAAAAAAAAMAu/wHL1Up7rHwCgAAAAABJRU5ErkJggg==" alt="logo" id="app__logo">
-        </div>
         <div class="chat_and_contacts">
             <div class="contacts">
                 <div class="single__contacts" id="single__contacts">
@@ -58,12 +52,22 @@
                         
                     </div>
                 </div>
-                <div class="send__message">
-                  <form action="" method="post" id="send__message__form">
-                    <input type="text" class="msgtext" placeholder="Write Your Mesaage">
-                    <button type="submit">➤</button>
-                  </form>
+                <div class="send_MediaOrMsg">
+                    <button id="showSendMediaForm">✉</button>
+                    <div class="send__media" id="sendMediaSection">
+                        <form action="" method="post" id="media__form">
+                            <input type="file" src="" alt="" name="fileFromSender">
+                            <input type="submit" value="⇑" id="media__submitBtn">
+                        </form>
+                    </div>
+                    <div class="send__message">
+                      <form action="" method="post" id="send__message__form">
+                        <input type="text" class="msgtext" placeholder="Write Your Mesaage">
+                        <button type="submit">➤</button>
+                      </form>
+                    </div>
                 </div>
+                
             </div>
         </div>
     </main>

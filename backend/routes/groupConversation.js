@@ -10,6 +10,8 @@ router.post('/sendGroupMessage', authorization, groupConversationController.post
 
 router.get('/getGroupMessages/:groupId', authorization, groupConversationController.getGroupMessage);
 
+router.post('/postMedia/:groupId', authorization, groupConversationController.postMedia);
+
 
 
 

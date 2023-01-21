@@ -3,6 +3,8 @@ dotenv.config();
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const multer = require('multer');
+const fileUpload = require('express-fileupload');
 
 const sequelize = require("./util/database");
 
@@ -14,9 +16,13 @@ const conversationRoutes = require("./routes/conversation");
 const groupConversationRoutes = require('./routes/groupConversation');
 
 const app = express();
+const upload = multer();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(fileUpload());
+
+
 
 app.use(cors());
 

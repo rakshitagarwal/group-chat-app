@@ -6,21 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="signUp.js" defer></script>
     <link rel="stylesheet" href="main.css">
-    <title>Chat App || Sign Up</title>
+    <title>Chat App-Sign Up</title>
 </head>
 <body>
     <header> 
         <nav id="main__nav">
             <div class="nav__items" id="tagName">
-                <h4>Chat App</h4>
+                <h2>Group Chat App Project</h2>
             </div>
             <div class="right__section">
+                
                 <div class="nav__items">
-                    <a href="logIn.html">Log In</a>
-                    
-                </div>
-                <div class="nav__items">
-                    <a href="about.html">About Us</a>
+                    <button onclick="window.location.href = 'login.html';">Log In</button>
                 </div>
             </div>
             
@@ -28,6 +25,7 @@
     </header>
     <main>
         <form action="./logIn.html" method="post" id="input__form">
+            
             <div class="form__items">
                 <label for="username">Name:</label>
                 <input type="text" id="username" name="username">
@@ -41,7 +39,7 @@
                 <input type="password" id="password" name="password">
             </div>
             <div class="form__items">
-                <button type="submit" id="form_submit">Register</button>
+                <button type="submit" id="form_submit">Sign Up</button>
             </div>
 
         </form>

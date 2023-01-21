@@ -7,9 +7,10 @@ const convertIntoSeconds = (time) => {
 
 exports.postMessage = async (req, res, next) => {
     const { message_text, sent_to } = req.body;
+    console.log(req.body);
     //console.log(message_text, req.user);
     try {
-        const result = await req.user.createMessage({message_text: message_text,sent_to: sent_to})
+        const result = await req.user.createMessage({message_text: message_text,sent_to: sent_to,message_sender_name: req.user.name})
         res.status(200).json({messageInfo: result.dataValues, success: true, message: 'Message sent succesfully!!'})
     
     } catch (err) {

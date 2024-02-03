@@ -8,7 +8,6 @@ const convertIntoSeconds = (time) => {
 exports.postMessage = async (req, res, next) => {
     const { message_text, sent_to } = req.body;
     console.log(req.body);
-    //console.log(message_text, req.user);
     try {
         const result = await req.user.createMessage({message_text: message_text,sent_to: sent_to,message_sender_name: req.user.name})
         res.status(200).json({messageInfo: result.dataValues, success: true, message: 'Message sent succesfully!!'})
@@ -28,10 +27,7 @@ exports.getMessage = async (req, res, next) => {
         messages.forEach(element => {messagequeue.push(element.dataValues);});
         const recieversMessageArr = await Message.findAll({ where: { userId: contactIdOfReceiver, sent_to: req.user.id } })
         recieversMessageArr.forEach(element=>{ recieversMessages.push(element.dataValues)})
-        //console.log('recievers messages to me', recieversMessages);
-        //console.log('senders messages', messagequeue);
         const completeConversation = [...messagequeue, ...recieversMessages];
-        //console.log(completeConversation);
         for (let i = 0; i < completeConversation.length; i++){
             for (let j = i; j < completeConversation.length; j++){
                 let time_j = convertIntoSeconds(completeConversation[j].createdAt);

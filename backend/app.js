@@ -31,7 +31,6 @@ const Message = require("./models/message");
 const ChatGroup = require("./models/chatgroup");
 const GroupMember = require("./models/groupMembers");
 
-//relation between tables
 User.hasMany(Message);
 Message.belongsTo(User);
 

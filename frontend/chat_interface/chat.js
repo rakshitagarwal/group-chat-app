@@ -17,7 +17,6 @@ function ready() {
     let singleContacts = document.getElementById('single__contacts');
 
     function addSingleContacts(contact) {
-        //console.log(contact.id);
         let single__contactsDiv=`<div class="single__contact" id="${contact.id}">
         <h5 >${contact.name}</h5>
         </div>`
@@ -54,11 +53,7 @@ function ready() {
                 
                 getAllMessagesOfThisConvo(contactId);
                 
-        // setInterval(() => {
-        //     getAllMessagesOfThisConvo(contactId)
-        // }, 1000);
-        
-                const submitForm = document.getElementById('send__message__form');
+               const submitForm = document.getElementById('send__message__form');
                 submitForm.addEventListener('submit', (e)=> {
                     e.preventDefault();
                     let msgData = {
@@ -66,7 +61,6 @@ function ready() {
                         sent_to: document.getElementsByClassName('msgText')[0].id
                     }
             
-                    //console.log(msgData);
                     document.getElementsByClassName('msgText')[0].value = '';
                     axios.post(
                         "http://localhost:5000/sendMessage",
@@ -86,18 +80,15 @@ function getAllMessagesOfThisConvo(contactId) {
         .then((response) => {
             let actualChat = document.getElementsByClassName('actual__chat')[0];
             const messageArr = response.data.messages;
-            //console.log(messageArr);
             
             messageArr.forEach(messageData => {
                 if (messageData.userId == contactId) {
-                    //console.log('in recivers section');
                      let recieversMessage=`<div class="others__message msgs">
                      <h4>${messageData.message_text}</h4>
                      <p>timestamp</p></div>`
                 actualChat.innerHTML += recieversMessage;
                 }
                 else {
-                    //console.log('in senders section');
                     let sendersMessage=`<div class="my__message msgs">
                      <h4>${messageData.message_text}</h4>
                      <p>timestamp</p></div>`
@@ -118,7 +109,6 @@ function addMesaageToChat(msg) {
 }
 
 
-//-----on logout-----
 document.getElementById('log-out').addEventListener('click', () => {
     localStorage.removeItem('token');
 })

@@ -29,7 +29,6 @@ form__newGroup.addEventListener("submit", async (e) => {
 window.addEventListener("DOMContentLoaded", ready);
 
 function ready() {
-  //------------------------fetch All groups----------------------//
   let groups = document.getElementById("groups");
   function addYourGroupsToScreen(contact) {
     let groupsDiv = `<div class="single__group" id="${contact.groupId}">
@@ -49,7 +48,6 @@ function ready() {
     })
     .catch((err) => console.log(err));
 
-  //--------Group data and chat feature ------------//
   groups.addEventListener("click", (e) => {
     let chatSection = document.getElementsByClassName("chat__section")[0];
     if (e.target.classList.contains("single__group")) {
@@ -76,17 +74,12 @@ function ready() {
                                      </div>
                                   </div>`;
       getAllMessagesOfThisGroup(groupId);
-
-      // setInterval(getAllMessagesOfThisGroup(groupId), 1000);
-
       const displaychat = document.getElementById("display__chat");
       displaychat.addEventListener("click", showGroupInfo);
     }
 
-    //---------------------send media section------------------------------//
     const showSendMediaFormBtn = document.getElementById("showSendMediaForm");
     showSendMediaFormBtn.addEventListener("click", (e) => {
-      //console.log(e.target);
       const showSendMediaForm = document.getElementById("sendMediaSection");
       console.log("media button clicked");
       showSendMediaForm.classList.toggle("mediaFormActive");
@@ -108,19 +101,11 @@ function ready() {
       } else {
         try {
           let formData = new FormData();
-          console.log("filesToUpload", filesToUpload);
           formData.append("file", filesToUpload);
             
           for (let key of formData.keys()) {
             console.log('data inside form data', formData.get(key));
-          }
-
-          console.log("formData", formData);
-
-          // const response = await axios.post(
-          //   `https://httpbin.org/post`, formData);
-          // console.log(response);
-          
+          }   
           const response = await axios.post(`http://localhost:5000/postMedia/${groupId}`, formData, { headers: { authorization: `Bearer ${localStorage.getItem("token")}`}});
           console.log("response", response);
         } catch (err) {
@@ -129,7 +114,6 @@ function ready() {
       }
     });
 
-    //---------------------send messages--------------------------//
     const submitForm = document.getElementById("send__message__form");
     submitForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -139,7 +123,6 @@ function ready() {
       };
 
       const groupId = document.getElementsByClassName("msgText")[0].id;
-      //getAllMessagesOfThisGroup(groupId);
 
       document.getElementsByClassName("msgText")[0].value = "";
       axios
@@ -171,7 +154,6 @@ function addMesaageToChat(msg) {
 }
 
 const getAllMessagesOfThisGroup = async (groupId) => {
-  //--------------Old messages from local storage-------//
   const msgStoredInLocalStorage = JSON.parse(
     localStorage.getItem(`${groupId}`) || "[]"
   );
@@ -184,13 +166,10 @@ const getAllMessagesOfThisGroup = async (groupId) => {
     });
   }
 
-  //-------new messages from network call---------//
-  //setInterval(async(groupId)=>{await newMessagesFromNetworkCall(groupId)}, 3000);
   newMessagesFromNetworkCall(groupId);
 };
 
 async function newMessagesFromNetworkCall(groupId) {
-  //-------new messages from network call---------//
   const msgStoredInLocalStorage = JSON.parse(
     localStorage.getItem(`${groupId}`) || "[]"
   );
@@ -235,7 +214,6 @@ function showGroupMsgOnScreen(messageData, yourUserId) {
   }
 }
 
-//-----------------------Group Info---Admin Superpowers(add,remove,make otheradmin, remove from admin)------//
 function showGroupInfo(e) {
   if (e.target.id === "person__name") {
     console.log("No Group Selected");
@@ -285,7 +263,6 @@ function showGroupInfo(e) {
       "groupDetail__section"
     );
     groupDetail__section.addEventListener("click", (e) => {
-      //-------------------Admin => Make other users as Admin-------------------//
       if (
         e.target.classList.contains("adminBtn") &&
         e.target.classList.contains("false")
@@ -304,7 +281,6 @@ function showGroupInfo(e) {
           .catch((err) => console.log(err));
       }
 
-      //---------------------Admin => Remove other admin from admin, but peron will still group member----//
       if (
         e.target.classList.contains("adminBtn") &&
         e.target.classList.contains("true")
@@ -323,7 +299,6 @@ function showGroupInfo(e) {
           .catch((err) => console.log(err));
       }
 
-      //----------------------Admin => Remove existing member from group----//
       if (e.target.classList.contains("removeUser")) {
         console.log("remove user clicked", e.target.id);
         axios
@@ -340,7 +315,6 @@ function showGroupInfo(e) {
           .catch((err) => console.log(err));
       }
 
-      //---------------Group member => wants to leave group---------------//
       if (e.target.classList.contains("leave__group")) {
         axios
           .post(
@@ -357,7 +331,6 @@ function showGroupInfo(e) {
       }
     });
 
-    //---------------Admin => Add new members-----------------------------//
     const add_new_memberForm = document.getElementById("add_new_memberForm");
     add_new_memberForm.addEventListener("submit", (e) => {
       e.preventDefault();

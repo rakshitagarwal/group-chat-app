@@ -15,16 +15,10 @@ exports.postMedia = async (req, res, next) => {
             console.log('inside formData', formData.get(key));
         }
         res.status(200).json({ success: true, message:'recieved' });
-    //const mediaPath = await req.file;
     const groupId = req.params.groupId;
     const userId = req.user.id;
     const fileName = `${userId}/${new Date()}`;
     const mediaLink = await S3Services.uploadToS3(fileName, uploadedfiles);
-    // await req.user.createDownload({
-    //   fileName: `${new Date()}`,
-    //   link: `${mediaLink}`,
-    // });
-    // res.status(200).json({ success: true, fileUrl: downloadLink });
   } catch (error) {
     res.status(500).json({ success: false, error });
   }
@@ -32,7 +26,6 @@ exports.postMedia = async (req, res, next) => {
 
 exports.postGroupMessage = async (req, res, next) => {
     const { message_text, sent_to_groupNo } = req.body;
-    //console.log(message_text, req.user);
     try {
         const result = await req.user.createMessage({message_text: message_text,sent_to_groupId: sent_to_groupNo,message_sender_name:req.user.name})
         res.status(200).json({messageInfo: result.dataValues, success: true, message: 'Message sent succesfully!!'})

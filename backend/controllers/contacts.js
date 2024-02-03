@@ -14,16 +14,13 @@ exports.getContacts = async (req, res, next) => {
         },
       },
     });
-    //console.log(contacts[0].dataValues);
     contacts.forEach((element) => {
       const newObj = {
         id: element.dataValues.id,
         name: element.dataValues.name,
         phone: element.dataValues.phone,
       };
-      //console.log(element.dataValues);
       contactArr.push(newObj);
-      //console.log(contactArr);
     });
     res.status(200).json({ contacts: contactArr, success: true });
   } catch (err) {
@@ -72,11 +69,9 @@ exports.postNewGroup = async (req, res, next) => {
 }
 
 
-//-------Add New Memeber in group----
 exports.postAddNewMember = async (req, res, next) => { 
   const { mobileNo ,groupId} = req.body;
   const adminUser = req.user.id;
-  //console.log(adminUser);
 
   const isAdmin = await GroupMember.findOne({ where: { userId: adminUser, chatGroupId: groupId, isAdmin: true } });
   if (!isAdmin) { return res.status(404).json({ message: "You dont have Admin Powers for this group", success: false }) }
